@@ -41,14 +41,14 @@ public class PaymentController {
         return ResponseEntity.created(uri).body(createdDto);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<PaymentDto> atualizar(@PathVariable @NotNull Long id, @RequestBody @Valid PaymentDto dto) {
         PaymentDto updatedDto = service.updatePayment(id, dto);
 
         return ResponseEntity.ok(updatedDto);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> remover(@PathVariable @NotNull Long id) {
         service.deletePayment(id);
 
