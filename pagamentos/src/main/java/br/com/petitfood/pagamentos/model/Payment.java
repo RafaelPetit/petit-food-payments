@@ -1,3 +1,4 @@
+// java
 package br.com.petitfood.pagamentos.model;
 
 import jakarta.persistence.*;
@@ -25,30 +26,30 @@ public class Payment {
 
     @NotNull
     @Positive
-    private BigDecimal valor;
+    private BigDecimal amount;
 
     @NotBlank
     @Size(max = 100)
-    private String nome;
+    private String cardHolderName;
 
     @NotBlank
     @Size(max = 19)
-    private String numero;
+    private String cardNumber;
 
     @Size(max = 7)
-    private String expiracao;
+    private String expiration;
 
     @NotBlank
     @Size(max = 3)
-    private String codigo;
+    private String securityCode;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private Status status;
 
     @NotNull
-    private Long pedidoId;
+    private Long orderId;
 
     @NotNull
-    private Long formaDePagamentoId;
+    private Long paymentMethodId;
 }

@@ -15,7 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/Payments")
+@RequestMapping("/payments")
 public class PaymentController {
 
     @Autowired
