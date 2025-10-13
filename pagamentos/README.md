@@ -31,8 +31,8 @@ O sistema é composto por múltiplos microsserviços, cada um com uma responsabi
 
 | Serviço | Descrição |
 |----------|------------|
-| **payment-service** | Responsável por gerenciar transações de pagamento. Conecta-se ao banco MySQL. |
-| **order-service** | Serviço complementar que se comunica com o serviço de pagamento. |
+| **payment-service** | Responsável por gerenciar transações de payment. Conecta-se ao banco MySQL. |
+| **order-service** | Serviço complementar que se comunica com o serviço de payment. |
 | **discovery-service (Eureka Server)** | Serviço de registro e descoberta, permitindo que os microsserviços encontrem uns aos outros dinamicamente. |
 | **gateway-service** | API Gateway responsável por centralizar e rotear as requisições para os microsserviços. |
 
