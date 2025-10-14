@@ -54,4 +54,10 @@ public class PaymentController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{id}/approve")
+    public ResponseEntity<Void> approvePayment(@PathVariable @NotNull Long id) {
+        service.approvePayment(id);
+        return ResponseEntity.ok().build();
+    }
 }
