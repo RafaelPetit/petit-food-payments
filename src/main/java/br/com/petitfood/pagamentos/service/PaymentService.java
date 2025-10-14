@@ -63,12 +63,23 @@ public class PaymentService {
     public void approvePayment(Long id) {
         Optional<Payment> payment = repository.findById(id);
 
-        if (!payment.isPresent()) {
+        if (payment.isEmpty()) {
             throw new EntityNotFoundException();
         }
 
         payment.get().setStatus(Status.APPROVED);
         repository.save(payment.get());
         order.approvePayment(payment.get().getOrderId());
+    }
+
+    public void updateStatusFallback(Long id) {
+        Optional<Payment> payment = repository.findById(id);
+
+        if (payment.isEmpty()) {
+            throw new EntityNotFoundException();
+        }
+
+        payment.get().setStatus(Status.PENDING);
+        repository.save(payment.get());
     }
 }
