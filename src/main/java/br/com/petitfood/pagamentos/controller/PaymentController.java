@@ -5,6 +5,8 @@ import br.com.petitfood.pagamentos.service.PaymentService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +24,9 @@ public class PaymentController {
     @Autowired
     private PaymentService service;
 
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
     @GetMapping
     public Page<PaymentDto> listar(@PageableDefault(size = 10) Pageable pagination) {
         return service.getAll(pagination);
@@ -36,10 +41,13 @@ public class PaymentController {
 
     @PostMapping
     public ResponseEntity<PaymentDto> cadastrar(@RequestBody @Valid PaymentDto dto, UriComponentsBuilder uriBuilder) {
-        PaymentDto createdDto = service.createPayment(dto);
-        URI uri = uriBuilder.path("/Payments/{id}").buildAndExpand(createdDto.getId()).toUri();
+        PaymentDto payment = service.createPayment(dto);
+        URI uri = uriBuilder.path("/Payments/{id}").buildAndExpand(payment.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(createdDto);
+        Message message = new Message(("Payment confirmed with id: " + payment.getId()).getBytes());
+        rabbitTemplate.convertAndSend("payment.confirmed", payment);
+
+        return ResponseEntity.created(uri).body(payment);
     }
 
     @PutMapping("/{id}")
