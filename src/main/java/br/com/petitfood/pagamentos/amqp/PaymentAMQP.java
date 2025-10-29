@@ -1,5 +1,6 @@
 package br.com.petitfood.pagamentos.amqp;
 
+import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -13,10 +14,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class PaymentAMQP {
-    @Bean
-    public Queue paymentQueue() {
-        return QueueBuilder.nonDurable("payment.confirmed").build();
-    }
+//    @Bean
+//    public Queue paymentQueue() {
+//        return QueueBuilder.nonDurable("payment.confirmed").build();
+//    }
 
     @Bean
     public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
@@ -38,5 +39,10 @@ public class PaymentAMQP {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(messageConverter);
         return rabbitTemplate;
+    }
+
+    @Bean
+    public FanoutExchange paymentExchange() {
+        return new FanoutExchange("payment.exchange");
     }
 }

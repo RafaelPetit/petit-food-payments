@@ -45,7 +45,7 @@ public class PaymentController {
         URI uri = uriBuilder.path("/Payments/{id}").buildAndExpand(payment.getId()).toUri();
 
         Message message = new Message(("Payment confirmed with id: " + payment.getId()).getBytes());
-        rabbitTemplate.convertAndSend("payment.confirmed", payment);
+        rabbitTemplate.convertAndSend("payment.exchange","", payment);
 
         return ResponseEntity.created(uri).body(payment);
     }
