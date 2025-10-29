@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.petitfood</groupId>
-	<artifactId>pagamentos</artifactId>
+	<artifactId>payments</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>pagamentos</name>
+	<name>payments</name>
 	<description>MS de pagamentos PetitFood</description>
 	<url/>
 	<licenses>
